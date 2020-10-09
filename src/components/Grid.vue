@@ -12,10 +12,18 @@
     </div>
 
     <div class="row d-flex justify-content-between mt-4 col-6 mx-auto">
-      <button type="button" class="btn btn-primary col col-5">
+      <button
+        type="button"
+        class="btn btn-primary col col-5 rounded-pill"
+        @click="selectStart"
+      >
         Select start
       </button>
-      <button type="button" class="btn btn-primary col col-5">
+      <button
+        type="button"
+        class="btn btn-danger col col-5 rounded-pill"
+        @click="selectEnd"
+      >
         Select end
       </button>
     </div>
@@ -58,10 +66,24 @@ export default {
         "background-color":
           this.hoverIndex === index
             ? "aqua"
+            : this.startIndex === index
+            ? "blue"
+            : this.endIndex === index
+            ? "red"
             : this.selectedIndex === index
             ? "lawngreen"
             : "white",
       };
+    },
+    selectStart() {
+      if (this.selectedIndex > -1) {
+        this.startIndex = this.selectedIndex;
+      }
+    },
+    selectEnd() {
+      if (this.selectedIndex > -1) {
+        this.endIndex = this.selectedIndex;
+      }
     },
   },
 };
