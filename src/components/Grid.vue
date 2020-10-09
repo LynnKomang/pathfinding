@@ -8,6 +8,15 @@
         @mouseout="unhighlight($event)"
       ></div>
     </div>
+
+    <div class="row d-flex justify-content-between mt-4 col-6 mx-auto">
+      <button type="button" class="btn btn-primary col col-5">
+        Select start
+      </button>
+      <button type="button" class="btn btn-primary col col-5">
+        Select end
+      </button>
+    </div>
   </div>
 </template>
 
