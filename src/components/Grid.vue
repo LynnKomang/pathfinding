@@ -1,11 +1,13 @@
 <template>
-  <div class="grid" :style="gridStyle">
-    <div
-      v-for="cellNum in size * size"
-      :key="cellNum"
-      @mouseover="highlight($event)"
-      @mouseout="unhighlight($event)"
-    ></div>
+  <div>
+    <div class="grid" :style="gridStyle">
+      <div
+        v-for="cellNum in width * height"
+        :key="cellNum"
+        @mouseover="highlight($event)"
+        @mouseout="unhighlight($event)"
+      ></div>
+    </div>
   </div>
 </template>
 
@@ -18,12 +20,15 @@ export default {
     },
   },
   computed: {
-    size() {
+    width() {
+      return this.matrix[0].length;
+    },
+    height() {
       return this.matrix.length;
     },
     gridStyle() {
       return {
-        gridTemplateColumns: `repeat(${this.size}, minmax(100px, 1fr))`,
+        gridTemplateColumns: `repeat(${this.width}, minmax(1px, 1fr))`,
       };
     },
   },

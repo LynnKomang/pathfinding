@@ -1,6 +1,6 @@
 <template>
-  <div id="app">
-    <Grid :matrix="grid" />
+  <div id="app" class="container">
+    <Grid :matrix="grid" class="mx-auto" />
   </div>
 </template>
 
@@ -11,12 +11,13 @@ export default {
   name: "App",
   data() {
     return {
-      size: 10,
+      width: 44,
+      height: 22,
     };
   },
   computed: {
     grid() {
-      return Array(this.size).fill(Array(this.size));
+      return Array(+this.height).fill(Array(+this.width));
     },
   },
   components: {
