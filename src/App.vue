@@ -17,9 +17,17 @@ export default {
   },
   computed: {
     grid() {
-      return Array(+this.height).fill(
-        Array(+this.width).fill({ isHovered: false })
-      );
+      const grid = [];
+
+      for (let row = 0; row < +this.height; ++row) {
+        grid.push([]);
+
+        for (let col = 0; col < +this.width; ++col) {
+          grid[grid.length - 1].push({ isHovered: false });
+        }
+      }
+
+      return grid;
     },
   },
   components: {
