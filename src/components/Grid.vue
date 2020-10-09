@@ -4,9 +4,10 @@
       <div
         v-for="(cell, index) in spreadMatrix"
         :key="index"
-        :style="{ 'background-color': cell.isHovered ? 'aqua' : 'white' }"
+        :style="cellStyle(cell, index)"
         @mouseover="cell.isHovered = true"
         @mouseout="cell.isHovered = false"
+        @click="selectedIndex = index"
       ></div>
     </div>
 
@@ -32,6 +33,9 @@ export default {
   data() {
     return {
       spreadMatrix: this.matrix.reduce((total, next) => total.concat(next), []),
+      startIndex: -1,
+      endIndex: -1,
+      selectedIndex: -1,
     };
   },
   computed: {
@@ -44,6 +48,17 @@ export default {
     gridStyle() {
       return {
         gridTemplateColumns: `repeat(${this.width}, minmax(1px, 1fr))`,
+      };
+    },
+  },
+  methods: {
+    cellStyle(cell, index) {
+      return {
+        "background-color": cell.isHovered
+          ? "aqua"
+          : this.selectedIndex === index
+          ? "green"
+          : "white",
       };
     },
   },
