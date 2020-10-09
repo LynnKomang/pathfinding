@@ -5,8 +5,8 @@
         v-for="(cell, index) in spreadMatrix"
         :key="index"
         :style="cellStyle(cell, index)"
-        @mouseover="cell.isHovered = true"
-        @mouseout="cell.isHovered = false"
+        @mouseover="hoverIndex = index"
+        @mouseout="hoverIndex = -1"
         @click="selectedIndex = index"
       ></div>
     </div>
@@ -33,6 +33,7 @@ export default {
   data() {
     return {
       spreadMatrix: this.matrix.reduce((total, next) => total.concat(next), []),
+      hoverIndex: -1,
       startIndex: -1,
       endIndex: -1,
       selectedIndex: -1,
@@ -54,11 +55,12 @@ export default {
   methods: {
     cellStyle(cell, index) {
       return {
-        "background-color": cell.isHovered
-          ? "aqua"
-          : this.selectedIndex === index
-          ? "green"
-          : "white",
+        "background-color":
+          this.hoverIndex === index
+            ? "aqua"
+            : this.selectedIndex === index
+            ? "lawngreen"
+            : "white",
       };
     },
   },
