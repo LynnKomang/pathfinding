@@ -77,13 +77,32 @@ export default {
     },
     selectStart() {
       if (this.selectedIndex > -1) {
-        this.startIndex = this.selectedIndex;
+        if (this.selectedIndex === this.endIndex) {
+          this.sendError(
+            `The starting position and the ending positions can't be the same`
+          );
+        } else {
+          this.startIndex = this.selectedIndex;
+        }
+      } else {
+        this.sendError(`There isn't a selected cell`);
       }
     },
     selectEnd() {
       if (this.selectedIndex > -1) {
-        this.endIndex = this.selectedIndex;
+        if (this.selectedIndex === this.startIndex) {
+          this.sendError(
+            `The starting position and the ending positions can't be the same`
+          );
+        } else {
+          this.endIndex = this.selectedIndex;
+        }
+      } else {
+        this.sendError(`There isn't a selected cell`);
       }
+    },
+    sendError(message) {
+      this.$emit("on-error", message);
     },
   },
 };

@@ -1,6 +1,7 @@
 <template>
   <div id="app" class="container">
-    <Grid :matrix="grid" class="mx-auto" />
+    <Grid :matrix="grid" class="mx-auto" @on-error="showAlert" />
+    <notifications group="error" position="bottom right" />
   </div>
 </template>
 
@@ -22,6 +23,16 @@ export default {
   },
   components: {
     Grid,
+  },
+  methods: {
+    showAlert(message) {
+      this.$notify({
+        type: "error",
+        group: "error",
+        title: "Error",
+        text: message,
+      });
+    },
   },
 };
 </script>
