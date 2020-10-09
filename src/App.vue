@@ -17,7 +17,9 @@ export default {
   },
   computed: {
     grid() {
-      return Array(+this.height).fill(Array(+this.width));
+      return Array(+this.height).fill(
+        Array(+this.width).fill({ isHovered: false })
+      );
     },
   },
   components: {

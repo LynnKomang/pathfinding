@@ -2,10 +2,11 @@
   <div>
     <div class="grid" :style="gridStyle">
       <div
-        v-for="cellNum in width * height"
-        :key="cellNum"
-        @mouseover="highlight($event)"
-        @mouseout="unhighlight($event)"
+        v-for="(cell, index) in spreadMatrix"
+        :key="index"
+        :style="{ 'background-color': cell.isHovered ? 'aqua' : 'white' }"
+        @mouseover="cell.isHovered = true"
+        @mouseout="cell.isHovered = false"
       ></div>
     </div>
 
@@ -28,6 +29,11 @@ export default {
       required: true,
     },
   },
+  data() {
+    return {
+      spreadMatrix: this.matrix.reduce((total, next) => total.concat(next), []),
+    };
+  },
   computed: {
     width() {
       return this.matrix[0].length;
@@ -39,14 +45,6 @@ export default {
       return {
         gridTemplateColumns: `repeat(${this.width}, minmax(1px, 1fr))`,
       };
-    },
-  },
-  methods: {
-    highlight(event) {
-      event.target.style.backgroundColor = "red";
-    },
-    unhighlight(event) {
-      event.target.style.backgroundColor = "white";
     },
   },
 };
