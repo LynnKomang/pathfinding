@@ -11,12 +11,16 @@
 
 <script>
 export default {
-  data() {
-    return {
-      size: 5,
-    };
+  props: {
+    matrix: {
+      type: Array,
+      required: true,
+    },
   },
   computed: {
+    size() {
+      return this.matrix.length;
+    },
     gridStyle() {
       return {
         gridTemplateColumns: `repeat(${this.size}, minmax(100px, 1fr))`,

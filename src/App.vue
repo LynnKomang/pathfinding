@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Grid />
+    <Grid :matrix="grid" />
   </div>
 </template>
 
@@ -9,6 +9,16 @@ import Grid from "./components/Grid.vue";
 
 export default {
   name: "App",
+  data() {
+    return {
+      size: 10,
+    };
+  },
+  computed: {
+    grid() {
+      return Array(this.size).fill(Array(this.size));
+    },
+  },
   components: {
     Grid,
   },
