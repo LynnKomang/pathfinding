@@ -50,6 +50,7 @@ export default {
       width: 44,
       height: 22,
       matrix: [],
+      wasInitiated: false,
     };
   },
   computed: {
@@ -86,6 +87,11 @@ export default {
             `The starting position and the ending positions can't be the same`
           );
         } else {
+          if (!this.wasInitiated) {
+            this.matrix = initiateMap(this.height, this.width);
+            this.wasInitiated = true;
+          }
+
           this.startIndex = this.selectedIndex;
         }
       } else {
@@ -99,6 +105,11 @@ export default {
             `The starting position and the ending positions can't be the same`
           );
         } else {
+          if (!this.wasInitiated) {
+            this.matrix = initiateMap(this.height, this.width);
+            this.wasInitiated = true;
+          }
+
           this.endIndex = this.selectedIndex;
         }
       } else {
@@ -121,11 +132,14 @@ export default {
         this.matrix[row][col].isInPath = true;
       });
 
+      this.wasInitiated = false;
+
       this.$forceUpdate();
     },
   },
   mounted() {
     this.matrix = initiateMap(this.height, this.width);
+    this.wasInitiated = true;
   },
 };
 </script>
