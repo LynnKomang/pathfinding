@@ -1,6 +1,6 @@
 const MAX_F = Number.MAX_SAFE_INTEGER;
 
-const initiateMap = (height, width) => {
+export const initiateMap = (height, width) => {
   const map = Array.from({ length: height }, () =>
     Array.from({ length: width }, () => ({
       f: MAX_F,
@@ -34,20 +34,14 @@ const calcH = (successor, goal) => {
 };
 
 const tracePath = (map, goal) => {
-  const path = Array.from({ length: map.length }, () =>
-    Array.from({ length: map[0].length }, () => 0)
-  );
+  const path = [];
 
   while (goal.parent != goal) {
-    const { row, col } = goal.pos;
-
-    path[row][col] = 1;
-
+    path.push(goal.pos);
     goal = goal.parent;
   }
 
-  const { row, col } = goal.pos;
-  path[row][col] = 1;
+  path.push(goal.pos);
 
   return path;
 };
@@ -82,7 +76,7 @@ const checkSuccessor = (map, goal, open, closed, q, rowAdd, colAdd) => {
   return wasFound;
 };
 
-const findPath = (map, start, goal) => {
+export const findPath = (map, start, goal) => {
   const open = new Set();
   const closed = new Set();
 
@@ -123,15 +117,15 @@ const findPath = (map, start, goal) => {
   return tracePath(map, goal);
 };
 
-const width = 10;
-const height = 10;
+// const width = 10;
+// const height = 10;
 
-const map = initiateMap(height, width);
+// const map = initiateMap(height, width);
 
-console.table(
-  findPath(
-    map,
-    map[Math.floor(Math.random() * map.length)][Math.floor(Math.random() * map[0].length)],
-    map[Math.floor(Math.random() * map.length)][Math.floor(Math.random() * map[0].length)]
-  )
-);
+// console.table(
+//   findPath(
+//     map,
+//     map[Math.floor(Math.random() * map.length)][Math.floor(Math.random() * map[0].length)],
+//     map[Math.floor(Math.random() * map.length)][Math.floor(Math.random() * map[0].length)]
+//   )
+// );

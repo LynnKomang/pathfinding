@@ -7,6 +7,7 @@
 
 <script>
 import Grid from "./components/Grid.vue";
+import { initiateMap } from "./astar";
 
 export default {
   name: "App",
@@ -18,7 +19,7 @@ export default {
   },
   computed: {
     grid() {
-      return Array(this.height).fill(Array(this.width).fill(0));
+      return initiateMap(this.height, this.width);
     },
   },
   components: {

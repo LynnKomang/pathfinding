@@ -27,32 +27,34 @@
         Select end
       </button>
     </div>
+    <button
+      type="button"
+      class="btn btn-lg btn-success px-5 rounded-pill mt-4"
+      @click="searchPath"
+    >
+      Search path
+    </button>
   </div>
 </template>
 
 <script>
+import { initiateMap, findPath } from "../astar";
+
 export default {
-  props: {
-    matrix: {
-      type: Array,
-      required: true,
-    },
-  },
   data() {
     return {
-      spreadMatrix: this.matrix.reduce((total, next) => total.concat(next), []),
       hoverIndex: -1,
       startIndex: -1,
       endIndex: -1,
       selectedIndex: -1,
+      width: 44,
+      height: 22,
+      matrix: [],
     };
   },
   computed: {
-    width() {
-      return this.matrix[0].length;
-    },
-    height() {
-      return this.matrix.length;
+    spreadMatrix() {
+      return this.matrix.reduce((a, b) => a.concat(b), []);
     },
     gridStyle() {
       return {
@@ -72,6 +74,8 @@ export default {
             ? "red"
             : this.selectedIndex === index
             ? "lawngreen"
+            : cell.isInPath
+            ? "orange"
             : "white",
       };
     },
@@ -104,6 +108,24 @@ export default {
     sendError(message) {
       this.$emit("on-error", message);
     },
+    searchPath() {
+      this.matrix = initiateMap(this.height, this.width);
+
+      const path = findPath(
+        this.matrix,
+        this.spreadMatrix[this.startIndex],
+        this.spreadMatrix[this.endIndex]
+      ).reverse();
+
+      path.forEach(({ row, col }) => {
+        this.matrix[row][col].isInPath = true;
+      });
+
+      this.$forceUpdate();
+    },
+  },
+  mounted() {
+    this.matrix = initiateMap(this.height, this.width);
   },
 };
 </script>
