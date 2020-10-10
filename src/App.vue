@@ -1,29 +1,22 @@
 <template>
-  <div id="app" class="container">
-    <Grid :matrix="grid" class="mx-auto" @on-error="showAlert" />
-    <notifications group="error" position="bottom right" />
+  <div id="app">
+    <Hero />
+    <div class="container">
+      <Grid class="mx-auto" @on-error="showAlert" />
+      <notifications group="error" position="bottom right" />
+    </div>
   </div>
 </template>
 
 <script>
 import Grid from "./components/Grid.vue";
-import { initiateMap } from "./astar";
+import Hero from "./components/Hero";
 
 export default {
   name: "App",
-  data() {
-    return {
-      width: 44,
-      height: 22,
-    };
-  },
-  computed: {
-    grid() {
-      return initiateMap(this.height, this.width);
-    },
-  },
   components: {
     Grid,
+    Hero,
   },
   methods: {
     showAlert(message) {
@@ -39,12 +32,4 @@ export default {
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
 </style>

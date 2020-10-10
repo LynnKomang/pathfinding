@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="grid" :style="gridStyle">
+    <div class="grid shadow-lg" :style="gridStyle">
       <div
         v-for="(cell, index) in spreadMatrix"
         :key="index"
@@ -14,26 +14,28 @@
     <div class="row d-flex justify-content-between mt-4 col-6 mx-auto">
       <button
         type="button"
-        class="btn btn-primary col col-5 rounded-pill"
+        class="btn btn-primary col col-5 rounded-pill shadow"
         @click="selectStart"
       >
         Select start
       </button>
       <button
         type="button"
-        class="btn btn-danger col col-5 rounded-pill"
+        class="btn btn-danger col col-5 rounded-pill shadow"
         @click="selectEnd"
       >
         Select end
       </button>
     </div>
-    <button
-      type="button"
-      class="btn btn-lg btn-success px-5 rounded-pill mt-4"
-      @click="searchPath"
-    >
-      Search path
-    </button>
+    <div class="text-center">
+      <button
+        type="button"
+        class="btn btn-lg btn-success px-5 rounded-pill mt-4 shadow"
+        @click="searchPath"
+      >
+        Search path
+      </button>
+    </div>
   </div>
 </template>
 
