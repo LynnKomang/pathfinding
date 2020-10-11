@@ -2,16 +2,19 @@
   <div>
     <div class="grid shadow-lg" :style="gridStyle">
       <div
+        ondragstart="return false;"
+        ondrop="return false;"
         v-for="(cell, index) in spreadMatrix"
         :key="index"
         :style="cellStyle(cell, index)"
         @mouseover="hoverIndex = index"
         @mouseout="hoverIndex = -1"
-        @click="selectedIndex = index"
+        @contextmenu="$event.preventDefault()"
+        @mousedown="handleClick($event, index)"
       ></div>
     </div>
 
-    <div class="row d-flex justify-content-between mt-4 col-6 mx-auto">
+    <div class="row d-flex justify-content-between mt-4 col-7 mx-auto">
       <button
         type="button"
         class="btn btn-primary col col-5 rounded-pill shadow"
@@ -53,6 +56,7 @@ export default {
       height: 22,
       matrix: [],
       wasInitiated: false,
+      walls: new Set(),
     };
   },
   computed: {
@@ -66,6 +70,17 @@ export default {
     },
   },
   methods: {
+    handleClick(event, index) {
+      if (event.which == 3) {
+        if (!this.walls.has(index)) {
+          this.walls.add(index);
+        } else {
+          this.walls.delete(index);
+        }
+      } else {
+        this.selectedIndex = index;
+      }
+    },
     cellStyle(cell, index) {
       return {
         "background-color":
@@ -77,6 +92,8 @@ export default {
             ? "red"
             : this.selectedIndex === index
             ? "lawngreen"
+            : this.walls.has(index)
+            ? "gray"
             : cell.isInPath
             ? "orange"
             : "white",
@@ -90,7 +107,7 @@ export default {
           );
         } else {
           if (!this.wasInitiated) {
-            this.matrix = initiateMap(this.height, this.width);
+            this.matrix = initiateMap(this.height, this.width, this.walls);
             this.wasInitiated = true;
           }
 
@@ -108,7 +125,7 @@ export default {
           );
         } else {
           if (!this.wasInitiated) {
-            this.matrix = initiateMap(this.height, this.width);
+            this.matrix = initiateMap(this.height, this.width, this.walls);
             this.wasInitiated = true;
           }
 
@@ -126,7 +143,7 @@ export default {
         this.sendError("There isn't a selected starting and ending point.");
       }
 
-      this.matrix = initiateMap(this.height, this.width);
+      this.matrix = initiateMap(this.height, this.width, this.walls);
 
       const path = findPath(
         this.matrix,
@@ -145,7 +162,7 @@ export default {
     },
   },
   mounted() {
-    this.matrix = initiateMap(this.height, this.width);
+    this.matrix = initiateMap(this.height, this.width, this.walls);
     this.wasInitiated = true;
   },
 };

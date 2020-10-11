@@ -1,6 +1,6 @@
 const MAX_F = Number.MAX_SAFE_INTEGER;
 
-export const initiateMap = (height, width) => {
+export const initiateMap = (height, width, walls) => {
   const map = Array.from({ length: height }, () =>
     Array.from({ length: width }, () => ({
       f: MAX_F,
@@ -13,6 +13,7 @@ export const initiateMap = (height, width) => {
   for (let row = 0; row < height; ++row) {
     for (let col = 0; col < width; ++col) {
       map[row][col].pos = { row, col };
+      map[row][col].isWall = walls.has(row * width + col);
     }
   }
 
@@ -33,7 +34,7 @@ const calcH = (successor, goal) => {
   );
 };
 
-const tracePath = (map, goal) => {
+const tracePath = (goal) => {
   const path = [];
 
   while (goal.parent != goal) {
@@ -58,7 +59,7 @@ const checkSuccessor = (map, goal, open, closed, q, rowAdd, colAdd) => {
       successor.parent = q;
       console.log('GOAL FOUND!');
       wasFound = true;
-    } else if (!closed.has(successor)) {
+    } else if (!closed.has(successor) && !successor.isWall) {
       const newG = q.g + calcDistance(q, successor);
       const newH = calcH(successor, goal);
       const newF = newG + newH;
@@ -114,7 +115,7 @@ export const findPath = (map, start, goal) => {
     return [];
   }
 
-  return tracePath(map, goal);
+  return tracePath(goal);
 };
 
 // const width = 10;
