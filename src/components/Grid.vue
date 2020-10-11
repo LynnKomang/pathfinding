@@ -122,6 +122,10 @@ export default {
       this.$emit("on-error", message);
     },
     searchPath() {
+      if (this.startIndex === -1 || this.endIndex === -1) {
+        this.sendError("There isn't a selected starting and ending point.");
+      }
+
       this.matrix = initiateMap(this.height, this.width);
 
       const path = findPath(
