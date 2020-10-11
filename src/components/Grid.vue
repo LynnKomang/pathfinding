@@ -134,13 +134,14 @@ export default {
         this.spreadMatrix[this.endIndex]
       ).reverse();
 
-      path.forEach(({ row, col }) => {
-        this.matrix[row][col].isInPath = true;
+      path.forEach(({ row, col }, index) => {
+        setTimeout(() => {
+          this.matrix[row][col].isInPath = true;
+          this.$forceUpdate();
+        }, 20 * index);
       });
 
       this.wasInitiated = false;
-
-      this.$forceUpdate();
     },
   },
   mounted() {
