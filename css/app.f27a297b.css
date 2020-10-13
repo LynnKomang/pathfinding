@@ -1,0 +1,1 @@
+.grid{display:grid}.grid>div{border:1px solid #000}.grid>div:before{content:"";padding-bottom:100%;display:inline-block;vertical-align:top}
