@@ -11,6 +11,7 @@
         @mouseout="hoverIndex = -1"
         @contextmenu="$event.preventDefault()"
         @mousedown="handleClick($event, index)"
+        @mouseenter="drawWall($event, index)"
       ></div>
     </div>
 
@@ -71,14 +72,14 @@ export default {
   },
   methods: {
     handleClick(event, index) {
-      if (event.which == 3) {
+      if (event.which == 1) {
+        this.selectedIndex = index;
+      } else if (event.which == 3) {
         if (!this.walls.has(index)) {
           this.walls.add(index);
         } else {
           this.walls.delete(index);
         }
-      } else {
-        this.selectedIndex = index;
       }
     },
     cellStyle(cell, index) {
@@ -159,6 +160,15 @@ export default {
       });
 
       this.wasInitiated = false;
+    },
+    drawWall(event, index) {
+      if (event.buttons == 2) {
+        if (!this.walls.has(index)) {
+          this.walls.add(index);
+        } else {
+          this.walls.delete(index);
+        }
+      }
     },
   },
   mounted() {
